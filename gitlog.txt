@@ -1,0 +1,47 @@
+commit 36ec35778b5bf166dbdf901ea7135bece5d8d678
+Author: Pietro Rebecchi <pier@itu.dk>
+Date:   Mon Feb 19 21:19:58 2024 +0100
+
+    delete test.md
+
+commit 2a819539c86c2afa42cba7a96c87fa267161845a
+Author: Pietro Rebecchi <pier@itu.dk>
+Date:   Mon Feb 19 21:18:52 2024 +0100
+
+    add new_file.txt
+
+commit 04139c1ef2d81cd71d8127817b38580414eafa30
+Author: pietrorebecchi <159179111+pietrorebecchi@users.noreply.github.com>
+Date:   Mon Feb 19 20:31:20 2024 +0100
+
+    Update members.md
+
+commit d293937154eed51097812d71acb10cad107d3645
+Author: pietrorebecchi <159179111+pietrorebecchi@users.noreply.github.com>
+Date:   Mon Feb 19 20:31:08 2024 +0100
+
+    Update members.md
+
+commit 3e8f5265534b3824e422b07153c2faecc84cd9a6
+Author: Cornelius Nielsen <cotn@itu.dk>
+Date:   Mon Feb 19 12:31:03 2024 +0100
+
+    testing if we can move git folder to other location
+
+commit 5845e3ab95f6e6ca6c58fd31d44dd2a7bb4b36b9
+Author: Cornelius Nielsen <cotn@itu.dk>
+Date:   Mon Feb 19 12:19:47 2024 +0100
+
+    created new file for exercise
+
+commit 3df9a0dc7acabeaedbb2354b4bed8a688caf08b4
+Author: CorneliusMN <157996139+CorneliusMN@users.noreply.github.com>
+Date:   Mon Feb 19 12:11:33 2024 +0100
+
+    Create members.md
+
+commit 0ac7ed0da11ebb409b03063085bfc53020387c2d
+Author: CorneliusMN <157996139+CorneliusMN@users.noreply.github.com>
+Date:   Mon Feb 19 12:09:44 2024 +0100
+
+    Initial commit
