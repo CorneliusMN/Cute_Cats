@@ -2,4 +2,4 @@ Cornelius
 Peter
 Pietro
 Szonja
-Wenz
+Wenzel
