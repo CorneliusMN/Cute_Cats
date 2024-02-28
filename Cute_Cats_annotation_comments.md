@@ -24,3 +24,4 @@ PAT_631_1227_585.png: bad quality picture, too close up, the entire picture coul
 
 c5: <br>
 PAT_380_773_542.png: could not differentiate between lesion and skin <br>
+PAT_338_710_319.png : could not differentiate between lesion and skin <br>
