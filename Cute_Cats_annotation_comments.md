@@ -7,4 +7,13 @@ PAT_1307_1092_878.png - The pigmentation of the skin makes it hard to tell the l
 PAT_1428_1489_38.png - The hairs makes it impossible to estimate the lesion. 
 
 
-c5 - PAT_380_773_542.png : could not differentiate between lesion and skin
+c5:
+PAT_380_773_542.png - could not differentiate between lesion and skin
+
+
+c2:
+PAT_1665_2978_578.png - because of the hairs and image taken too close it is impossible to see the lesion
+PAT_1729_3235_909.png - some marks on the skin makes it hard to see the lesion
+PAT_1826_3580_871.png - picture was taken too close
+PAT_2010_4136_318.png - no difference between the lesion and a normal skin
+
