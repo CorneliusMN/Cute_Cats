@@ -9,3 +9,10 @@ BCC is the most common form of skin cancer. It occurs due to DNA damage caused b
 
 SCC - Squamous Cell Carcinoma
 SCC is the second most common skin cancer and like the BCC it is caused by exposure to UV radiation. “SCC can appear like scaly red patches, open sores, rough, thickened or wart-like skin or growths with central depressions.” Compared to BCC, SCC tends to be bigger in dimensions, and more aggressively spreading.
+
+ACK - Actinic Keratosis
+ACK is the most common precancer which forms on skin that has been exposed to extensive UV radiation. “AKs usually appear as small dry, scaly or crusty patches of skin. They may be red, light or dark tan, white, pink, skin color or a combination of all the former”. As such ACK can be hard to determine based on look alone and can in most cases actually be easier to determine based on feel.
+
+SEK - Seborrheic Keratosis
+SEK are skin tumors on the outer layer of the skin, however they are non-cancerous and do not require treatment in most cases. They usually appear as light brown or dark marks and have well defined edges in most cases, which helps differentiate them. In some cases microscopic evaluation is required to determine it.
+
