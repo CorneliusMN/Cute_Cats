@@ -19,8 +19,8 @@ label = np.array(df['diagnostic'])
 
 
 #Where did we store the features?
-file_features = 'features/features.csv'
-feature_names = ['red','green','blue']
+file_features = 'features/features_automatic.csv'
+feature_names = ["color","asymmetry","veil"]
 
 # Load the features - remember the example features are not informative
 df_features = pd.read_csv(file_features)
@@ -28,7 +28,7 @@ df_features = pd.read_csv(file_features)
 
 # Make the dataset, you can select different classes (see task 0)
 x = np.array(df_features[feature_names])
-y =  label == 'NEV'   #now True means healthy nevus, False means something else
+y =  label == 'MEL'   #now True means mel, False means something else
 patient_id = df['patient_id']
 
 

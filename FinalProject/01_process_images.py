@@ -18,6 +18,10 @@ from extract_features import extract_features
 # Main script
 #-------------------
 
+# INPUT FILEPATH FOR MASK AND IMAGE FOLDER HERE
+# Path to the directory containing your images
+image_folder_path = r"C:/Users/corny/Documents/Data Science/2. Semester/Projects in DataS/Cute_Cats/FinalProject/images"
+mask_folder_path = r"C:/Users/corny/Documents/Data Science/2. Semester/Projects in DataS/Cute_Cats/FinalProject/masks"
 
 #Where is the raw data
 file_data = 'metadata.csv'
@@ -35,19 +39,12 @@ label = np.array(df['diagnostic'])
 # Here you could decide to filter the data in some way (see task 0)
 # For example you can have a file selected_images.csv which stores the IDs of the files you need
 is_melanoma = label == 'MEL'
-
 num_images = len(image_id)
-
 
 #Make array to store features
 feature_names = ["image_id", "color","asymmetry",'veil']
 num_features = len(feature_names)
 features = [] 
-
-
-# Path to the directory containing your images
-image_folder_path = r"C:/Users/corny/Documents/Data Science/2. Semester/Projects in DataS/Cute_Cats/FinalProject/images/cats_images"
-mask_folder_path = r"C:/Users/corny/Documents/Data Science/2. Semester/Projects in DataS/Cute_Cats/FinalProject/masks/cats_masks"
  
 # Get a list of all files in the directory
 file_list = [i for i in os.listdir(image_folder_path) if i.endswith(".png")]
