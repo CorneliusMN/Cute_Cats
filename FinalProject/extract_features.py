@@ -15,12 +15,18 @@ from skimage import morphology
 
 
 #Main function to extract features from an image, that calls other functions    
-def extract_features(image):
+def extract_features(image, mask):
     
     #Function for calculating the asymmetry index
-    asymmetry_score = asymmetry_score(image)
+    asymmetry_score = asymmetry_score(mask)
+
+    #Function for calculating the color variation
+    color_variation = 
+
+    #Function for calculating blue_white veil
+    blue_white_veil = 
     
-    return np.array(asymmetry_score, dtype=np.float16)
+    return np.array(color_variation, asymmetry_score, blue_white_veil, dtype=np.float16)
 
 
 #help function for asmmetry, finds indices of major axis. Given variable should be a mask.
@@ -104,4 +110,10 @@ def asymmetry_score(mask):
     
     dice = (axes0_overlap*2 + axes1_overlap*2)/(np.sum(mask_max)*2)
     
-    return dice
+    if dice > 0.88:
+        return 0
+    elif 0.7 < dice < 0.88:
+        return 1
+    else:
+        return 2
+    #return dice

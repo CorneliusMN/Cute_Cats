@@ -19,12 +19,12 @@ from extract_features import extract_features
 
 
 #Where is the raw data
-file_data = '..' + os.sep + 'data' + os.sep +'metadata.csv'
-path_image = '..' + os.sep + 'data' + os.sep + 'images' + os.sep + 'imgs_part_1'
+file_data = 'metadata.csv'
+path_image = 'images'
     
   
 #Where we will store the features
-file_features = 'features/features.csv'
+file_features = 'features/features_automatic.csv'
 
 
 #Read meta-data into a Pandas dataframe
@@ -36,13 +36,13 @@ label = np.array(df['diagnostic'])
 
 # Here you could decide to filter the data in some way (see task 0)
 # For example you can have a file selected_images.csv which stores the IDs of the files you need
-is_nevus =  label == 'NEV'
+is_melanoma = label == 'MEL'
 
 num_images = len(image_id)
 
 
 #Make array to store features
-feature_names = ['red','green','blue']
+feature_names = ["color","asymmetry",'veil']
 num_features = len(feature_names)
 features = np.zeros([num_images,num_features], dtype=np.float16)  
 
