@@ -7,6 +7,7 @@ from os.path import exists
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
 
 # Import our own file that has the feature extraction functions
 from extract_features import extract_features
@@ -39,14 +40,14 @@ num_images = len(image_id)
 
 
 #Make array to store features
-feature_names = ["color","asymmetry",'veil']
+feature_names = ["image_id", "color","asymmetry",'veil']
 num_features = len(feature_names)
-features = np.zeros([num_images,num_features], dtype=np.float16)  
+features = [] 
 
 
 # Path to the directory containing your images
-image_folder_path = "features"
-mask_folder_path = "masks"
+image_folder_path = r"C:/Users/corny/Documents/Data Science/2. Semester/Projects in DataS/Cute_Cats/FinalProject/images/cats_images"
+mask_folder_path = r"C:/Users/corny/Documents/Data Science/2. Semester/Projects in DataS/Cute_Cats/FinalProject/masks/cats_masks"
  
 # Get a list of all files in the directory
 file_list = [i for i in os.listdir(image_folder_path) if i.endswith(".png")]
@@ -55,8 +56,11 @@ file_list = [i for i in os.listdir(image_folder_path) if i.endswith(".png")]
 for n,filename in enumerate(file_list):
     # Create the full path to the image file
     image_path = os.path.join(image_folder_path, filename)
+    
     # Read the image
-    image = plt.imread(image_path)[:,:,:3]
+    image1 = Image.open(image_path)
+    image = np.array(image1.convert("RGB"))
+    
  
     #Read in mask as ground truth
     maskname = filename[:-4] + "_mask.png"
@@ -66,7 +70,8 @@ for n,filename in enumerate(file_list):
     x = extract_features(image, mask)
 
     # Store in the variable we created before
-    features[n,:] = [filename,*x]
+    features.append([filename,*x])
+    #print(filename,*x)
 
         
 #Save the image_id used + features to a file   

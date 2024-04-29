@@ -123,13 +123,12 @@ def blue_white_veil(image, mask):
     min_x, max_x = min(lesion_coordinates[0]), max(lesion_coordinates[0])
     min_y, max_y = min(lesion_coordinates[1]), max(lesion_coordinates[1])
     cropped_lesion = lesion_masked[min_x:max_x, min_y:max_y]
-
+   
     segments = slic(cropped_lesion, n_segments = 10, compactness = 5, sigma = 5, start_label = 1)
 
     tot_count = 0
     tot_area_segment = 0
-    tot_area = np.sum(new_mask)
-
+    tot_area = 0
     number_segments = np.unique(segments)
 
     for i in number_segments:
@@ -140,23 +139,19 @@ def blue_white_veil(image, mask):
 
         area = np.sum(non_black_mask)
         tot_area += area
-
         mean_rgb_values = np.mean(segment[non_black_mask], axis = 0)
         mean_rgb_values_ls = [int(val) for val in np.nan_to_num(mean_rgb_values)]
+        blue = {"min": np.array([50, 50, 105]),
+                "max": np.array([128, 200, 200])}
 
-        blue = {"min": np.array([50, 50, 105], dtype = np.float64),
-                "max": np.array([128, 200, 200], dtype = np.float64)}
-
-        mean_rgb_values_ls_to_check = np.array([mean_rgb_values_ls], dtype = np.float64)
+        mean_rgb_values_ls_to_check = np.array([mean_rgb_values_ls])
 
         is_blue = np.all((mean_rgb_values_ls_to_check >= blue["min"]) & (mean_rgb_values_ls_to_check <= blue["max"]))
-
         if is_blue:
             tot_count += 1
             tot_area_segment += area
 
     proportion = round((tot_area_segment / tot_area) * 100 if tot_area > 0 else 0, 3)
-
     if 20 < proportion < 80:
         return 1
     else:
@@ -207,7 +202,7 @@ def get_range(histo:np.ndarray) ->list[int]:
 def color_variation(image, mask):
     '''------Main FUNCTION------
     gets a numerical int value for the color variation of the lesion between 0 and 2'''
-# workaround: list[np.ndarray] = get_img(os.path.splitext(indv)[0])
+    # workaround: list[np.ndarray] = get_img(os.path.splitext(indv)[0])
     img1: np.ndarray = image
     mask1: np.ndarray = mask
 
@@ -217,19 +212,19 @@ def color_variation(image, mask):
     plotted_gray:np.ndarray = grayifier(prepped_img.copy())
     historgram:np.ndarray = histogrammer(plotted_gray)
     gray_list:list[int] = get_range(historgram)
-    gray_val:int = min([0,1,2], key=lambda x:abs(x-((gray_list[0]/gray_list[1]*gray_list[1]/3)-1))) 
+    gray_val:int = min([0,1,2], key=lambda x:abs(x-((gray_list[0]/gray_list[1]*gray_list[1]/3)-1)))
     return gray_val
 
 #Main function to extract features from an image, that calls other functions    
 def extract_features(image, mask):
     
     #Function for calculating the asymmetry index
-    asymmetry_score = asymmetry_score(mask)
+    asymmetry_score1 = asymmetry_score(mask)
 
     #Function for calculating the color variation
-    color_variation = color_variation(image, mask)
+    color_variation1 = color_variation(image, mask)
 
     #Function for calculating blue_white veil
-    blue_white_veil = blue_white_veil(image, mask)
+    blue_white_veil1 = blue_white_veil(image, mask)
     
-    return np.array(color_variation, asymmetry_score, blue_white_veil, dtype=np.float16)
+    return np.array([color_variation1, asymmetry_score1, blue_white_veil1], dtype=np.int16)
