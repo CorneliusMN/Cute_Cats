@@ -128,7 +128,8 @@ def blue_white_veil(image, mask):
 
     tot_count = 0
     tot_area_segment = 0
-    tot_area = 0
+    tot_area = np.sum(new_mask)
+
     number_segments = np.unique(segments)
 
     for i in number_segments:
@@ -138,10 +139,11 @@ def blue_white_veil(image, mask):
         non_black_mask = np.any(segment != [0, 0, 0], axis=2)
 
         area = np.sum(non_black_mask)
-        tot_area += area
+
         mean_rgb_values = np.mean(segment[non_black_mask], axis = 0)
         mean_rgb_values_ls = [int(val) for val in np.nan_to_num(mean_rgb_values)]
-        blue = {"min": np.array([50, 50, 105]),
+
+        blue = {"min": np.array([50, 50, 106]),
                 "max": np.array([128, 200, 200])}
 
         mean_rgb_values_ls_to_check = np.array([mean_rgb_values_ls])
@@ -152,6 +154,7 @@ def blue_white_veil(image, mask):
             tot_area_segment += area
 
     proportion = round((tot_area_segment / tot_area) * 100 if tot_area > 0 else 0, 3)
+
     if 20 < proportion < 80:
         return 1
     else:
