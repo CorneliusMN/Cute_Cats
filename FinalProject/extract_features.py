@@ -15,21 +15,9 @@ from skimage import morphology
 from skimage.io import imread
 from skimage.segmentation import slic
 from skimage.util import img_as_float
+from skimage import color
 
 
-#Main function to extract features from an image, that calls other functions    
-def extract_features(image, mask):
-    
-    #Function for calculating the asymmetry index
-    asymmetry_score = asymmetry_score(mask)
-
-    #Function for calculating the color variation
-    color_variation = 
-
-    #Function for calculating blue_white veil
-    blue_white_veil = blue_white_veil(image, mask)
-    
-    return np.array(color_variation, asymmetry_score, blue_white_veil, dtype=np.float16)
 
 
 #help function for asmmetry, finds indices of major axis. Given variable should be a mask.
@@ -173,3 +161,75 @@ def blue_white_veil(image, mask):
         return 1
     else:
         return 0
+    
+#COLOR VARIATION
+def grayifier(rgb: np.ndarray) -> np.ndarray:
+    '''------HELPER FUNCTION------
+    Turns a picture into grayscale, returns the picture, reduced to a one dimensional grayscale image, float values'''
+    return np.dot(rgb[...,:3],[0.2989, 0.5870, 0.1140])
+
+def crop_n_segment(picture: np.ndarray, mask:np.ndarray) -> np.ndarray:
+    '''------HELPER FUNCTION------
+    Crops the picture to the mask, gets the superpixels by SLIC and averages the colors of the segments'''
+    lesion_coords: tuple = np.where(mask != 0)
+    min_x: np.int64 = min(lesion_coords[0])
+    max_x: np.int64 = max(lesion_coords[0])
+    min_y: np.int64 = min(lesion_coords[1])
+    max_y: np.int64 = max(lesion_coords[1])
+    cropped_lesion: np.ndarray = picture[min_x:max_x,min_y:max_y]
+    segments: np.ndarray = slic(cropped_lesion, n_segments=20, compactness=15,sigma=5, enforce_connectivity=True,convert2lab=True)
+    out: np.ndarray = np.empty_like(cropped_lesion)
+    out = color.label2rgb(segments,cropped_lesion, kind = "avg")
+    return out
+
+def histogrammer(image: np.ndarray) -> np.ndarray:
+    '''------HELPER FUNCTION------
+    Gets a histogram of the segmented lesion'''
+    lesion_feat1:np.ndarray = image[image>0]
+    minimum: np.float64 = np.mean(lesion_feat1) - 2*np.std(lesion_feat1)
+    maximum: np.float64 = np.mean(lesion_feat1) + 2*np.std(lesion_feat1)
+    colr2:np.ndarray = np.histogram(lesion_feat1[(minimum <= lesion_feat1)&(lesion_feat1<=maximum)],bins = 30,range=(0,255))[0] #a bin is a uniformly increasing value
+    return colr2
+
+def get_range(histo:np.ndarray) ->list[int]:
+    '''------HELPER FUNCTION------
+    Gets the actual interesting facts out of the histogram'''
+    for nr,col in enumerate(histo):
+        if col !=0:
+            numfirst:int = nr
+            break
+    for revnr,revcol in enumerate(reversed(histo)):
+        if revcol !=0:
+            numlast: int = revnr
+            break
+    return [len(histo)-numlast-numfirst, len(histo[histo != 0])]
+
+def color_variation(image, mask):
+    '''------Main FUNCTION------
+    gets a numerical int value for the color variation of the lesion between 0 and 2'''
+# workaround: list[np.ndarray] = get_img(os.path.splitext(indv)[0])
+    img1: np.ndarray = image
+    mask1: np.ndarray = mask
+
+    prepped_img:np.ndarray = crop_n_segment(img1, mask1)
+
+    #Getting the pixel intensity
+    plotted_gray:np.ndarray = grayifier(prepped_img.copy())
+    historgram:np.ndarray = histogrammer(plotted_gray)
+    gray_list:list[int] = get_range(historgram)
+    gray_val:int = min([0,1,2], key=lambda x:abs(x-((gray_list[0]/gray_list[1]*gray_list[1]/3)-1))) 
+    return gray_val
+
+#Main function to extract features from an image, that calls other functions    
+def extract_features(image, mask):
+    
+    #Function for calculating the asymmetry index
+    asymmetry_score = asymmetry_score(mask)
+
+    #Function for calculating the color variation
+    color_variation = color_variation(image, mask)
+
+    #Function for calculating blue_white veil
+    blue_white_veil = blue_white_veil(image, mask)
+    
+    return np.array(color_variation, asymmetry_score, blue_white_veil, dtype=np.float16)
