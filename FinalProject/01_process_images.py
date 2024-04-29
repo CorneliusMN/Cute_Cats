@@ -20,12 +20,9 @@ from extract_features import extract_features
 
 #Where is the raw data
 file_data = 'metadata.csv'
-path_image = 'images'
-    
   
 #Where we will store the features
 file_features = 'features/features_automatic.csv'
-
 
 #Read meta-data into a Pandas dataframe
 df = pd.read_csv(file_data)
@@ -47,27 +44,32 @@ num_features = len(feature_names)
 features = np.zeros([num_images,num_features], dtype=np.float16)  
 
 
-#Loop through all images (now just 10 for demonstration)
-for i in np.arange(10):
-    
-    # Define filenames related to this image
-    file_image = path_image + os.sep + image_id[i] 
-    
-    if exists(file_image):
-        
-        # Read the image
-        im = plt.imread(file_image)
-        im = np.float16(im)  
-    
-        # Measure features - this does not do anything useful yet!
-        x = extract_features(im) 
-           
-        # Store in the variable we created before
-        features[i,:] = x
+# Path to the directory containing your images
+image_folder_path = "features"
+mask_folder_path = "masks"
+ 
+# Get a list of all files in the directory
+file_list = [i for i in os.listdir(image_folder_path) if i.endswith(".png")]
+ 
+# Iterate through each file in the directory
+for n,filename in enumerate(file_list):
+    # Create the full path to the image file
+    image_path = os.path.join(image_folder_path, filename)
+    # Read the image
+    image = plt.imread(image_path)[:,:,:3]
+ 
+    #Read in mask as ground truth
+    maskname = filename[:-4] + "_mask.png"
+    mask_path = os.path.join(mask_folder_path, maskname)
+    mask = plt.imread(mask_path)
        
+    x = extract_features(image, mask)
+
+    # Store in the variable we created before
+    features[n,:] = [filename,*x]
+
         
 #Save the image_id used + features to a file   
 df_features = pd.DataFrame(features, columns=feature_names)     
 df_features.to_csv(file_features, index=False)  
     
-
