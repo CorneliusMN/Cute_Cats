@@ -101,13 +101,7 @@ def asymmetry_score(mask):
     
     dice = (axes0_overlap*2 + axes1_overlap*2)/(np.sum(mask_max)*2)
     
-    if dice > 0.88:
-        return 0
-    elif 0.7 < dice < 0.88:
-        return 1
-    else:
-        return 2
-    #return dice
+    return dice
 
 
 
@@ -230,4 +224,4 @@ def extract_features(image, mask):
     #Function for calculating blue_white veil
     blue_white_veil1 = blue_white_veil(image, mask)
     
-    return np.array([color_variation_span, color_variation_amount, asymmetry_score1, blue_white_veil1], dtype=np.int16)
+    return np.array([color_variation_span, color_variation_amount, asymmetry_score1, blue_white_veil1], dtype=np.float16)
