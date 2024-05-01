@@ -26,7 +26,7 @@ mask_folder_path = r"./masks"
 file_data = "metadata.csv"
 
 # Where we will store the features
-file_features = "features/features_automatic.csv"
+file_features = "features/features.csv"
 
 # Read meta-data into a Pandas dataframe
 df = pd.read_csv(file_data)
