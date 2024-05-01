@@ -54,17 +54,11 @@ for n,filename in enumerate(file_list):
     # Create the full path to the image file
     image_path = os.path.join(image_folder_path, filename)
     
-    # Read the image
-    image1 = Image.open(image_path)
-    image = np.array(image1.convert("RGB"))
-    
- 
     #Read in mask as ground truth
     maskname = filename[:-4] + "_mask.png"
     mask_path = os.path.join(mask_folder_path, maskname)
-    mask = plt.imread(mask_path)
        
-    x = extract_features(image, mask)
+    x = extract_features(image_path, mask_path)
 
     # Store in the variable we created before
     features.append([filename,*x])

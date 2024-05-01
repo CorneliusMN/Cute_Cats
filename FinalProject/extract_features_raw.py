@@ -16,9 +16,7 @@ from skimage.io import imread
 from skimage.segmentation import slic
 from skimage.util import img_as_float
 from skimage import color
-
-
-
+from PIL import Image
 
 #help function for asmmetry, finds indices of major axis. Given variable should be a mask.
 def major_axes(mask):
@@ -211,8 +209,15 @@ def color_variation(image, mask):
     #return gray_val
     return gray_list
 #Main function to extract features from an image, that calls other functions    
-def extract_features(image, mask):
+def extract_features(image_path, mask_path):
+
+    # Read the image
+    image1 = Image.open(image_path)
+    image = np.array(image1.convert("RGB"))
     
+    #Read in mask as ground truth
+    mask = plt.imread(mask_path)
+
     #Function for calculating the asymmetry index
     asymmetry_score1 = asymmetry_score(mask)
 
