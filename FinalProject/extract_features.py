@@ -222,19 +222,19 @@ def color_variation(image, mask):
 def extract_features(image_path, mask_path):
 
     # Read the image
-    image1 = Image.open(image_path)
-    image = np.array(image1.convert("RGB"))
+    image_png = Image.open(image_path)
+    image_loaded = np.array(image_png.convert("RGB"))
     
     #Read in mask as ground truth
-    mask = plt.imread(mask_path)
+    mask_loaded = plt.imread(mask_path)
 
     #Function for calculating the asymmetry index
-    asymmetry_score1 = asymmetry_score(mask)
+    asymmetry_score1 = asymmetry_score(mask_loaded)
 
     #Function for calculating the color variation
-    color_variation1 = color_variation(image, mask)
+    color_variation1 = color_variation(image_loaded, mask_loaded)
 
     #Function for calculating blue_white veil
-    blue_white_veil1 = blue_white_veil(image, mask)
+    blue_white_veil1 = blue_white_veil(image_loaded, mask_loaded)
     
     return np.array([color_variation1, asymmetry_score1, blue_white_veil1], dtype=np.int16)
