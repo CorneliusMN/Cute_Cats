@@ -147,7 +147,10 @@ def blue_white_veil(image, mask):
 
     proportion = round((tot_area_segment / tot_area) * 100 if tot_area > 0 else 0, 3)
 
-    return proportion
+    if 20 < proportion < 80:
+        return 1
+    else:
+        return 0
     
 #COLOR VARIATION
 def grayifier(rgb: np.ndarray) -> np.ndarray:
