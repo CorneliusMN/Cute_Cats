@@ -254,4 +254,4 @@ def extract_features(image_path, mask_path):
     # Function for calculating blue_white veil
     blue_white_veil1 = blue_white_veil(image_loaded, mask_loaded)
 
-    return np.array([gray_span, gray_col,dice_score, blue_white_veil1,asymmetry_score1,color_variation1], dtype = np.int16)
+    return np.array([gray_span, gray_col,dice_score, blue_white_veil1,asymmetry_score1,color_variation1], dtype = np.float16)
