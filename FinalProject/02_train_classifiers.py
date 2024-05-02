@@ -12,7 +12,7 @@ import pickle
 
 
 # Read in data with automatically extracted features combined with information from metadata
-file_data = 'feautures/features_classifiertraining.csv'
+file_data = 'features/features_classifiertraining.csv'
 df = pd.read_csv(file_data)
 label = np.array(df['diagnostic'])
 feature_names = ["color_variation_span", "color_variation_amount", "asymmetry_dicescore", "veil"]
